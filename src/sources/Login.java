@@ -74,7 +74,7 @@ public class Login extends HttpServlet {
 			//get connection from pool 
 			Connection connection = source.getConnection();
 			Page pages = new Page(); 
-			Servlet servlets = new Servlet(); 
+			Servlet servlets = new Servlet();
 			
 			//get login credential from login form 
 			String username = request.getParameter("username");
@@ -93,6 +93,7 @@ public class Login extends HttpServlet {
 				
 				request.getSession().setAttribute("pages", pages);
 				request.getSession().setAttribute("servlets", servlets);
+				request.getSession().setAttribute("showMovies", false); 
 				
 				response.sendRedirect(servlets.main);
 				

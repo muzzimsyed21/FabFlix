@@ -72,7 +72,8 @@ public class ListMovies extends HttpServlet{
 				
 				
 				sesh.setAttribute("moviesToShow", movies);
-				request.getRequestDispatcher("/movielist.jsp").forward(request, response);
+				request.getSession().setAttribute("showMovies", true);
+				request.getRequestDispatcher("/main.jsp").forward(request, response);
  				
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
