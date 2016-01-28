@@ -54,8 +54,23 @@ public class ListMovies extends HttpServlet{
 				
 				//get connection from pool 
 				Connection connection = source.getConnection();
-				ArrayList<Movie> movies = null;
+				ArrayList<Movie> movies = (ArrayList<Movie>)sesh.getAttribute("moviesToShow");
 				PreparedStatement pStatement = null; 
+				
+				if (request.getParameter("action").equals("bySearch")){
+					
+					System.out.println("BY SEARCH");
+					System.out.println(request.getParameter("search"));
+					
+				}
+				
+				
+				if (request.getParameter("action").equals("byAdvancedSearch")){
+					
+					System.out.println("BY SEARCH");
+					System.out.println(request.getParameter("title"));
+					
+				}
 				
 				if (request.getParameter("action").equals("byGenre")){
 					
@@ -72,7 +87,7 @@ public class ListMovies extends HttpServlet{
 				
 				
 				sesh.setAttribute("moviesToShow", movies);
-				request.getSession().setAttribute("showMovies", true);
+				sesh.setAttribute("showAdvancedMenu", false);
 				request.getRequestDispatcher("/main.jsp").forward(request, response);
  				
 			} catch (NamingException e) {

@@ -4,9 +4,10 @@
 
 <% 
 
-if((Boolean)request.getSession().getAttribute("showMovies")){
+ArrayList<Movie> movies =  (ArrayList<Movie>)session.getAttribute("moviesToShow"); 
+
+if(movies!= null){
 	
-	ArrayList<Movie> movies =  (ArrayList<Movie>)session.getAttribute("moviesToShow"); 
 	for (Movie m: movies){
 %>
                     <div class="col-sm-4 col-lg-4 col-md-4">

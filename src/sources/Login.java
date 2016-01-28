@@ -73,8 +73,6 @@ public class Login extends HttpServlet {
 			
 			//get connection from pool 
 			Connection connection = source.getConnection();
-			Page pages = new Page(); 
-			Servlet servlets = new Servlet();
 			
 			//get login credential from login form 
 			String username = request.getParameter("username");
@@ -90,19 +88,19 @@ public class Login extends HttpServlet {
 				System.out.println("proceed to main");
 				request.getSession().setAttribute("User", new User(result.getString("id"), result.getString("first_name"), result.getString("last_name"),
 						result.getString("email"), result.getString("password"), new ArrayList<String>()));
+				request.getSession().setAttribute("pages", new Page());
+				request.getSession().setAttribute("servlets", new Servlet());
+				request.getSession().setAttribute("moviesToShow", new ArrayList<Movie>());
+				request.getSession().setAttribute("showAdvancedMenu", false); 
 				
-				request.getSession().setAttribute("pages", pages);
-				request.getSession().setAttribute("servlets", servlets);
-				request.getSession().setAttribute("showMovies", false); 
-				
-				response.sendRedirect(servlets.main);
+				response.sendRedirect("Main");
 				
 			}
 			
 			// or else no query was returned (wrong credentials) alert client
 			else{
 				
-				request.getRequestDispatcher(pages.login).forward(request, response);
+				request.getRequestDispatcher("/login.html").forward(request, response);
 				
 				// PRINT THIS SCRIPT ON WRONG UN/PASSWORD!
 				//out.println("<SCRIPT>alert('Username and password do not match')</SCRIPT>");

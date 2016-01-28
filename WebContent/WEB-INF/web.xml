@@ -38,6 +38,15 @@
 		<url-pattern>/ListMovies</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>AdvancedSearch</servlet-name>
+		<servlet-class>sources.AdvancedSearch</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AdvancedSearch</servlet-name>
+		<url-pattern>/AdvancedSearch</url-pattern>
+	</servlet-mapping>
 			
 	<resource-ref>
 		<description>

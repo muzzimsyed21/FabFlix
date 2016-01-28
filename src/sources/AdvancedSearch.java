@@ -1,33 +1,57 @@
-package sources; 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+package sources;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class AdvancedSearch extends HttpServlet {
-  public void init () throws ServletException {
-    // ....
-  }
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-  public void doGet (HttpServletRequest   req, HttpServletResponse  res) throws ServletException, IOException {
 
-    res.setContentType("text/html");
-    PrintWriter w = res.getWriter();
-    w.println("<html><head><title>Hello World</title></head>");
-    w.println("<body><h1>Hello World</h1></body></html>");
+public class AdvancedSearch extends HttpServlet{
 
-    w.flush(); // Commits the response
-    w.close();
-  }
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		
+		HttpSession sesh = request.getSession();
+		User currentUser = (User)sesh.getAttribute("User");
+		Page pages = (Page)sesh.getAttribute("pages"); 
+		Servlet servlets = (Servlet)sesh.getAttribute("servlets"); 
+		request.getSession().setAttribute("showMovies", false);
+		
+		if (currentUser== null){ // TODO FIX DIRECT LINK WITHOUT LOGIN REROUTE BACK TO LOGIN INTERFACE
 
-  public void doPost (HttpServletRequest  req, HttpServletResponse  res) throws ServletException, IOException {
-    // ...
-  }
+			ArrayList<Movie> movies =  (ArrayList<Movie>)sesh.getAttribute("moviesToShow");
+			if (movies != null) {
+				movies.clear();
+			}
+			
+			sesh.setAttribute("moviesToShow", movies);
+			request.getRequestDispatcher(pages.login).forward(request, response);
+			
+		}
+		
+		else{
+			
+			ArrayList<Movie> movies =  (ArrayList<Movie>)sesh.getAttribute("moviesToShow");
+			if (!movies.isEmpty()){
+				movies.clear();
+			}
+			
+			sesh.setAttribute("moviesToShow", movies);
+			sesh.setAttribute("showAdvancedMenu", true);
+			request.getRequestDispatcher(pages.main).forward(request, response);
+			
+		}
 
-  public void destroy () {
-    // ...
-  }
+		
+	}
 
-  public String getServletInfo () {
-    return "....";
-  }
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		doGet(request, response);
+	}
+
 }

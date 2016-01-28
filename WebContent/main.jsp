@@ -12,7 +12,16 @@
 
 			<%@ include file="sideNav.jsp" %> 
 
-			<%@ include file="listMovie.jsp" %> 
+            <%    
+            if ((boolean)session.getAttribute("showAdvancedMenu")){
+             //System.out.println("INSIDE SHOW ADVMEN"); 
+             %>
+
+                <%@ include file="advancedSearch.jsp" %>
+
+            <% } %>
+
+            <%@ include file="listMovie.jsp" %> 
 
         </div>
 
